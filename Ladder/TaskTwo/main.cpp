@@ -7,7 +7,7 @@ int main()
     int number = 0;
     int sum = 0;
 
-    cout << "Please, enter the number (min. 10): ";
+    cout << "Please, enter the number: ";
     cin >> number;
 
     while (number > 0)
