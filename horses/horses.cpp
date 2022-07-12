@@ -24,35 +24,35 @@ int main()
 
     	
     if (xAxis1 - 2 == xAxis2 and yAxis1 + 1 == yAxis2) {
-            answer = true;
+        answer = true;
     }
 
     if (xAxis1  + 2 == xAxis2 and yAxis1 - 1 == yAxis2) {
-        	answer = true;
+        answer = true;
     }
         
     if(xAxis1 + 1 == xAxis2 and yAxis1 - 2 == yAxis2) {
-        	answer = true;
+        answer = true;
     }
     
     if(xAxis1 - 1 == xAxis2 and yAxis1 - 2 == yAxis2) {
-        	answer = true;
+        answer = true;
     }
     
     if(xAxis1 -2 == xAxis2 and yAxis1 - 1 == yAxis2) {
-        	answer = true;
+        answer = true;
     }
     
     if(xAxis1 + 1 == xAxis2 and yAxis1 + 2 == yAxis2) {
-        	answer = true;
+        answer = true;
     }
     
     if(xAxis1 + 2 == xAxis2 and yAxis1 - 1 == yAxis2) {
-        	answer = true;
+        answer = true;
     }
        
     if(xAxis1 - 1 == xAxis2 and yAxis1 + 2 == yAxis2) {
-        	answer = true;
+        answer = true;
     }
             
 
