@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.22)
+project(untitled)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(Mutants Mutants/main.cpp)
+add_executable(MultiplicationTable MultiplicationTable/main.cpp)
+add_executable(Ladder_TaskTwo Ladder/TaskTwo/main.cpp)
+add_executable(Ladder_TaskThree Ladder/TaskThree/main.cpp)
+add_executable(Ladder_TaskFour Ladder/TaskFour/main.cpp)
+add_executable(Ladder_TaskFive Ladder/TaskFive/main.cpp)
+add_executable(Ladder_TaskSix Ladder/TaskSix/main.cpp)
+add_executable(Ladder_TaskSeven Ladder/TaskSeven/main.cpp)
