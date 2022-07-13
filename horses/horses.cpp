@@ -22,6 +22,11 @@ int main()
     cout << "Enter coordinates Y for the second horse: ";
     cin >> yAxis2;
     
+    if ((xAxis1 > 8 or xAxis1 < 1) or (yAxis1 > 8 or yAxis2 < 1) or (xAxis2 > 8 or xAxis1 < 1) or (yAxis1 > 8 or yAxis2 < 1)) {
+		cout << "Error: Wrong coordinates. Use numbers < 9 and > 0" << endl;
+		return 1;
+	}
+	
     if (xAxis1 - 2 == xAxis2 and yAxis1 + 1 == yAxis2) {
         answer = true;
     }
