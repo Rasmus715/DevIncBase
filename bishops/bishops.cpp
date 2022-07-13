@@ -23,23 +23,19 @@ int main()
     cin >> yAxis2;
 
     for (int i = 0; i < 8; i++) {
-    	
+        
         if (xAxis1 + i == xAxis2 and yAxis1 + i == yAxis2) {
             answer = true;
         }
-
         if (xAxis1 == xAxis2 - i and yAxis1 == yAxis2 - i) {
         	answer = true;
         }
-        
-        if(xAxis1 - i == xAxis2 and yAxis1 + i == yAxis2) {
+        if (xAxis1 - i == xAxis2 and yAxis1 + i == yAxis2) {
         	answer = true;
         }
-        
-        if(xAxis1 + i == xAxis2 and yAxis1 - i == yAxis2) {
+        if (xAxis1 + i == xAxis2 and yAxis1 - i == yAxis2) {
         	answer = true;
-        }
-            
+        } 
     }
 
     if (answer) {
