@@ -21,41 +21,32 @@ int main()
 
     cout << "Enter coordinates Y for the second horse: ";
     cin >> yAxis2;
-
-    	
+    
     if (xAxis1 - 2 == xAxis2 and yAxis1 + 1 == yAxis2) {
         answer = true;
     }
-
     if (xAxis1  + 2 == xAxis2 and yAxis1 - 1 == yAxis2) {
         answer = true;
-    }
-        
-    if(xAxis1 + 1 == xAxis2 and yAxis1 - 2 == yAxis2) {
+    }   
+    if (xAxis1 + 1 == xAxis2 and yAxis1 - 2 == yAxis2) {
         answer = true;
     }
-    
-    if(xAxis1 - 1 == xAxis2 and yAxis1 - 2 == yAxis2) {
+    if (xAxis1 - 1 == xAxis2 and yAxis1 - 2 == yAxis2) {
         answer = true;
     }
-    
-    if(xAxis1 -2 == xAxis2 and yAxis1 - 1 == yAxis2) {
+    if (xAxis1 -2 == xAxis2 and yAxis1 - 1 == yAxis2) {
         answer = true;
     }
-    
-    if(xAxis1 + 1 == xAxis2 and yAxis1 + 2 == yAxis2) {
+    if (xAxis1 + 1 == xAxis2 and yAxis1 + 2 == yAxis2) {
         answer = true;
     }
-    
-    if(xAxis1 + 2 == xAxis2 and yAxis1 - 1 == yAxis2) {
+    if (xAxis1 + 2 == xAxis2 and yAxis1 - 1 == yAxis2) {
         answer = true;
     }
-       
-    if(xAxis1 - 1 == xAxis2 and yAxis1 + 2 == yAxis2) {
+    if (xAxis1 - 1 == xAxis2 and yAxis1 + 2 == yAxis2) {
         answer = true;
     }
             
-
     if (answer) {
         cout << "Horses can beat one another!";
     } else {
