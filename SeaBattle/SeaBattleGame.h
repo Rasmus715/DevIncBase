@@ -20,9 +20,8 @@ public:
     void Singleplayer(bool debug = false);
     void Hotseat(bool debug = false);
     static void RenderGrid(string firstPlayer, string secondPlayer, Cell **playerCells, Cell **enemyCells, bool debug = false, bool hotseat = false);
-    Cell ** Preset(int number);
+    Cell** Preset(int number);
     bool FlipTheCoin(string firstPlayer, string secondPlayer);
-    static bool ShootAction(Cell **playerCells, bool isPC = false, int yCoordinate = 0, char xCoordinate = 'A');
     int CalculateAliveShipCells(Cell **cells);
 
     bool ShootActionStatic(string firstPlayer, Cell **enemyCells, Cell **playerCells, bool debug = false, bool isPC = false);
