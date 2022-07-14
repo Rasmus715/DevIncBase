@@ -11,7 +11,7 @@ public:
     bool fogOfWar = true;
     bool ship = false;
     bool cellState = true;
-    Cell(bool fogOfWar = false, bool ship = false, bool cellState = true) : fogOfWar(fogOfWar), ship(ship), cellState(cellState) {};
+    Cell(bool fogOfWar = true, bool ship = false, bool cellState = true) : fogOfWar(fogOfWar), ship(ship), cellState(cellState) {};
 };
 
 

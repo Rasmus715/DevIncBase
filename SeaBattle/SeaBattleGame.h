@@ -25,6 +25,7 @@ public:
     static bool ShootAction(Cell **playerCells, bool isPC = false, int yCoordinate = 0, char xCoordinate = 'A');
     int CalculateAliveShipCells(Cell **cells);
 
+    bool ShootActionStatic(string firstPlayer, Cell **enemyCells, Cell **playerCells, bool debug = false, bool isPC = false);
     void Sleep(int milliseconds);
 };
 

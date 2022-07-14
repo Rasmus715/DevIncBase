@@ -7,13 +7,15 @@
 #include "iomanip"
 #include <chrono>
 #include <thread>
+#include <random>
 
 using std::cout;
 using std::endl;
-using std::cin;
+using std::cin  ;
 using std::setw;
 using std::this_thread::sleep_for;
 using std::string;
+using std::default_random_engine;
 
 void SeaBattleGame::PrintSplashScreen()
 {
@@ -49,7 +51,8 @@ void SeaBattleGame::MainMenu()
             break;
         case 2:
             system("clear");
-            Hotseat();
+            NotImplemented();
+            //Hotseat();
             break;
         case 3:
             system("clear");
@@ -104,39 +107,60 @@ void SeaBattleGame::Singleplayer(bool debug)
     Cell** enemyCells = Preset(1);
     int playerAliveShipCells = CalculateAliveShipCells(playerCells);
     int enemyAliveShipCells = CalculateAliveShipCells(enemyCells);
+    cout << "playerAliveShipCells:" << playerAliveShipCells << endl;
 
     RenderGrid("Your", secondPlayer, playerCells, enemyCells, debug);
 
+
     bool playerGoesFirst = FlipTheCoin(firstPlayer, secondPlayer);
+
+    //Hardcore player to go first
+    playerGoesFirst = true;
+
     system("clear");
-
-    char playerXCoordinate = 'A';
-    int playerYCoordinate = 0;
-
-    while (playerAliveShipCells > 0 or enemyAliveShipCells > 0)
+    PrintLogo();
+    do
     {
         RenderGrid("Your", secondPlayer, playerCells, enemyCells, debug);
         cout << endl;
         cout << "In cycle" << endl;
         if(playerGoesFirst)
         {
-            cout << R"(Please, enter the X and Y coordinate, according to the format ("E 4", "A 2"))" << endl;
-            cin >> playerXCoordinate >> playerYCoordinate;
-            if(ShootAction(playerCells,false,playerYCoordinate, playerXCoordinate));
+            if(ShootActionStatic("You", playerCells, enemyCells, debug, false))
                 enemyAliveShipCells--;
+            cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
+            enemyAliveShipCells = -1;
+            playerGoesFirst = false;
         }
         else
         {
-            cout << "calling PC's ShootAction" << endl;
-            bool x = ShootAction(enemyCells,true);
+            PrintLogo();
+            RenderGrid("Your", secondPlayer, playerCells, enemyCells, debug);
+            cout << "calling PC's ShootActionStatic" << endl;
+            if(ShootActionStatic("Your", playerCells, enemyCells, debug, true))
                 playerAliveShipCells--;
+            cout << "playerAliveShipCells:" << playerAliveShipCells << endl;
+            cout << "Press \"Enter\" to continue";
+            cin.ignore();
+            cin.ignore();
+            system("clear");
+
+            if(ShootActionStatic("You", playerCells, enemyCells, debug, false))
+                enemyAliveShipCells--;
+            cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
+            enemyAliveShipCells = -1;
         }
     }
+    while (playerAliveShipCells > 0 or enemyAliveShipCells > 0);
+
+    cout << "GAMEOVER!";
 
         //ShootAction(enemyCells,)
+    cout << "Press \"Enter\" key to continue";
+    cin.ignore();
+    cin.ignore();
 
-    cin.ignore();
-    cin.ignore();
+    return;
 
 }
 
@@ -160,7 +184,6 @@ void SeaBattleGame::Hotseat(bool debug)
     RenderGrid(firstPlayer + "'s", secondPlayer + "'s", playerCells, enemyCells, debug, true);
 
     if(FlipTheCoin(firstPlayer, secondPlayer))
-
         cin.ignore();
     cin.ignore();
 
@@ -328,7 +351,12 @@ void SeaBattleGame::RenderGrid(string firstPlayer, string secondPlayer, Cell **p
                         cout << "X|";
                 }
                 else
-                    cout << "_|";
+                {
+                    if (playerCells[column][row].cellState)
+                        cout << "_|";
+                    if (!playerCells[column][row].cellState)
+                        cout << "M|";
+                }
             }
         }
         else
@@ -344,56 +372,50 @@ void SeaBattleGame::RenderGrid(string firstPlayer, string secondPlayer, Cell **p
         if(debug)
         {
             for (int row = 0; row < 10; row++) {
-                if (enemyCells[column][row].ship) {
+                if (enemyCells[column][row].ship)
+                {
                     if (enemyCells[column][row].cellState)
                         cout << "O|";
                     if (!enemyCells[column][row].cellState)
                         cout << "X|";
-                } else
-                    cout << "_|";
+                }
+                else
+                {
+                    if (enemyCells[column][row].cellState)
+                        cout << "_|";
+                    if (!enemyCells[column][row].cellState)
+                        cout << "M|";
+                }
             }
         }
         else
         {
             for (int row = 0; row < 10; row++)
-                if(enemyCells[column][row].fogOfWar)
-                    cout << "_|";
-                else {
-                    if (!enemyCells[column][row].ship)
-                        cout << "_|";
-                    else
-                        if (!enemyCells[column][row].cellState)
-                            cout << "X|";
+                    if (!enemyCells[column][row].fogOfWar)
+                    {
+                        if (enemyCells[column][row].ship)
+                        {
+                            if (!enemyCells[column][row].cellState)
+                                cout << "X|";
+                        }
                         else
-                            cout << "M|";
-                }
+                            if (!enemyCells[column][row].cellState)
+                                cout << "M|";
+                    }
+                    else
+                        cout << "_|";
         }
+
         cout << endl;
         rowNumber++;
         }
 
 }
 
-bool SeaBattleGame::FlipTheCoin(string firstPlayer, string secondPlayer)
+bool SeaBattleGame::ShootActionStatic(string firstPlayer, Cell **enemyCells, Cell **playerCells, bool debug, bool isPC)
 {
-    cout << endl << "Flipping the coin..." << endl;
-    Sleep(1000);
-    bool result = rand() > (RAND_MAX / 2);
-    if (result)
-        cout << firstPlayer <<  " goes first." << endl;
-    else
-        cout << secondPlayer << " goes first." << endl;
-    cout << "Press \"Enter\" to continue";
-    cin.ignore();
-    cin.ignore();
-    return result;
-
-}
-
-bool SeaBattleGame::ShootAction(Cell **cells, bool isPC, int yCoordinate, char xCoordinate)
-{
-    cout << "PC's xCoordinate:" << xCoordinate;
-    cout << "PC's yCoordinate:" << yCoordinate;
+    int xCoordinate = 0;
+    int yCoordinate = 0;
 
     if(isPC)
     {
@@ -402,26 +424,87 @@ bool SeaBattleGame::ShootAction(Cell **cells, bool isPC, int yCoordinate, char x
         {
             yCoordinate = rand() * 1.0 / RAND_MAX * (9+1);
             int xCoordinateInt = rand() * 1.0 / RAND_MAX * (9+1);
-            cout << "PC's xCoordinate:" << xCoordinateInt;
-            cout << "PC's yCoordinate:" << yCoordinate;
-            if (!cells[xCoordinate][yCoordinate].cellState)
+            cout << "PC's xCoordinateInt:" << xCoordinateInt << endl;
+            cout << "PC's yCoordinate:" << yCoordinate << endl;
+            if (!playerCells[xCoordinate][yCoordinate].cellState)
+            {
+                cout << "PC hit " << xCoordinateInt << " " << yCoordinate << endl;
+                cout << "and hit cell with already false cellState";
                 isCellAlive = true;
+            }
             else
             {
-                cout << "PC hit " << xCoordinateInt << " " << (char)yCoordinate;
-                if(cells[xCoordinateInt][yCoordinate].ship)
+                playerCells[xCoordinateInt][yCoordinate].fogOfWar = false;
+                playerCells[xCoordinateInt][yCoordinate].cellState = false;
+                PrintLogo();
+                RenderGrid("Your", "PC", playerCells, enemyCells, debug);
+                cout << "PC hit " << char(xCoordinateInt + 65) << " " << yCoordinate;
+                if(playerCells[xCoordinateInt][yCoordinate].ship)
                 {
-                    cells[xCoordinateInt][yCoordinate].cellState = false;
-                    cout << " and hit your ship.";
+                    cout << " and hit your ship." << endl;
+                    cout << "return true" << endl;
                     return true;
                 }
-                cout << " and missed.";
+                cout << " and missed." << endl;
+                cout << "return false" << endl;
                 return false;
             }
         }
     }
+    else
+    {
+        char xCoordinateChar;
+        PrintLogo();
+        RenderGrid("Your", "PC", playerCells, enemyCells, debug);
+        cout << R"(Please, enter the X and Y coordinate, according to the format ("E 4", "A 2"))" << endl;
+        scanf("%s %d",&xCoordinateChar, &yCoordinate);
+        cout << "xCoordinateChar: " << xCoordinateChar << endl;
+        cout << "xCoordinateChar after conversion: " << int(xCoordinateChar - 65) << endl;
+        cout << "yCoordinate: " << yCoordinate << endl;
+
+        int x = int(xCoordinateChar - 65);
+        while(x > 9 or x < 0 or yCoordinate > 10 or yCoordinate < 1)
+        {
+            cout << "Please, enter the valid coordinates" << endl;
+            cout << R"(Please, enter the X and Y coordinate, according to the format ("E 4", "A 2"))" << endl;
+            scanf("%s %d",&xCoordinateChar, &yCoordinate);
+            x = int(xCoordinateChar - 65);
+        }
+        enemyCells[x][yCoordinate - 1].cellState = false;
+        enemyCells[x][yCoordinate - 1].fogOfWar = false;
+        if(enemyCells[x][yCoordinate - 1].ship)
+        {
+            cout << "You hit the ship!" << endl;
+            return true;
+        }
+        else
+        {
+            cout << "You missed :(";
+            return false;
+        }
+    }
+
     return false;
 }
+
+
+bool SeaBattleGame::FlipTheCoin(string firstPlayer, string secondPlayer)
+{
+    cout << endl << "Flipping the coin..." << endl;
+    Sleep(1000);
+    bool result = rand() < (RAND_MAX / 2);
+    if (result)
+        cout << firstPlayer <<  " goes first." << endl;
+    else
+        cout << secondPlayer << " goes first." << endl;
+    cout << "Press \"Enter\" to continue";
+    cin.ignore();
+    cin.ignore();
+    return false;
+
+}
+
+
 
 void SeaBattleGame::Sleep(int milliseconds)
 {
