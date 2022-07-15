@@ -216,6 +216,8 @@ void SeaBattleGame::Singleplayer(bool debug)
         }
     }
 
+    Preset::DestroyField(playerCells);
+    Preset::DestroyField(enemyCells);
     PrintLogo();
     cout << "Game Over!" << endl;
     if(enemyAliveShipCells == 0)

@@ -12,6 +12,7 @@ class Preset {
 
 public:
     static Cell ** GenerateField(int number, bool exclude);
+    static void DestroyField(Cell** field);
 };
 
 

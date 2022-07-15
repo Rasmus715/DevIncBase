@@ -21,6 +21,7 @@ int main()
     {
         cout << "Please enter the day of your birthday: ";
         cin >> day;
+
         if (day < MIN_DAY or day > MAX_DAY)
             cout << "Day number cannot be less than 1 or more than 31." << endl;
     }
@@ -30,6 +31,7 @@ int main()
     {
         cout << "Please enter the month of your birthday: ";
         cin >> month;
+
         if (month < MIN_MONTH or month > MAX_MONTH)
             cout << "Month number cannot be less than 1 or more than 12." << endl;
     }
@@ -39,6 +41,7 @@ int main()
     {
         cout << "Please enter the year of your birthday: ";
         cin >> year;
+
         if (year > MAX_YEAR)
             cout << "Year number cannot be more than 2022." << endl;
     }

@@ -520,3 +520,12 @@ Cell **Preset::GenerateField(int number, bool exclude) {
 
     return result;
 }
+
+void Preset::DestroyField(Cell **field) {
+    for (int h = 0; h < 10; h++)
+    {
+        delete [] field[h];
+    }
+    delete [] field;
+    field = 0;
+}
