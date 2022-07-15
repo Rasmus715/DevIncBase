@@ -13,6 +13,7 @@ int main()
     while (number > 9)
     {
         nextDigit = number % 10;
+        
         if (nextDigit == number / 10 % 10)
         {
             cout << "Number contains two equal digits, that are staying in a row.";
