@@ -9,6 +9,7 @@
 #include <thread>
 #include <random>
 #include <ctime>
+#include "Preset.h"
 
 using std::cout;
 using std::endl;
@@ -29,7 +30,9 @@ void SeaBattleGame::PrintSplashScreen()
 
 void SeaBattleGame::MainMenu()
 {
+
     int option;
+
     PrintLogo();
     cout << "              +----------------------+                      " << endl;
     cout << "              |       Main Menu      |                      " << endl;
@@ -100,16 +103,21 @@ void SeaBattleGame::PrintLogo()
 
 void SeaBattleGame::Singleplayer(bool debug)
 {
-
+    srand ( time(nullptr) );
     string firstPlayer = "You";
     string secondPlayer = "PC";
     PrintLogo();
 
-    Cell** playerCells = Preset(1);
-    Cell** enemyCells = Preset(1);
+    //Crutch to prevent generating "0" all the time
+    int playerPreset = rand() * 1.0 / RAND_MAX * (3 + 1) + rand() * 1.0 / RAND_MAX * (3 + 1);
+    if(playerPreset > 3)
+        playerPreset = 0;
+
+    Cell** playerCells = Preset::GenerateField(playerPreset, false);
+    Cell** enemyCells = Preset::GenerateField(playerPreset, true);
     int playerAliveShipCells = CalculateAliveShipCells(playerCells);
     int enemyAliveShipCells = CalculateAliveShipCells(enemyCells);
-    cout << "playerAliveShipCells:" << playerAliveShipCells << endl;
+    //cout << "playerAliveShipCells:" << playerAliveShipCells << endl;
 
     RenderGrid("Your", secondPlayer, playerCells, enemyCells, debug);
 
@@ -121,33 +129,34 @@ void SeaBattleGame::Singleplayer(bool debug)
 
     //Good idea to move these things to another function.
     //... Maybe another time)
-    while(enemyAliveShipCells > 0 && playerAliveShipCells > 0)
+    while (enemyAliveShipCells > 0 && playerAliveShipCells > 0)
     {
         cout << endl;
-        cout << "In cycle" << endl;
-        bool state = playerAliveShipCells > 0;
-        cout << "state: " << state << endl;
+        //cout << "In cycle" << endl;
+        //bool state = playerAliveShipCells > 0;
+        //cout << "state: " << state << endl;
         bool result;
+
         if (playerGoesFirst)
         {
-            result = ShootActionStatic("You", playerCells, enemyCells, debug, false);
+            result = ShootActionStatic("You", enemyCells, playerCells,  debug, false);
             if(result)
                 enemyAliveShipCells--;
-            cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
-            cout << "Press \"Enter\" to continue";
+            //cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
+            cout << "Press \"Enter\" to continue" << endl;
             cin.ignore();
             cin.ignore();
             system("clear");
-            while(result)
+            while (result)
             {
-                result = ShootActionStatic("You", playerCells, enemyCells, debug, false);
+                result = ShootActionStatic("You", enemyCells, playerCells , debug, false);
                 if (!result)
                     break;
                 enemyAliveShipCells--;
                 if(enemyAliveShipCells == 0)
                     break;
-                cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
-                cout << "Press \"Enter\" to continue";
+                //cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
+                cout << "Press \"Enter\" to continue" << endl;
                 cin.ignore();
                 cin.ignore();
                 system("clear");
@@ -157,22 +166,20 @@ void SeaBattleGame::Singleplayer(bool debug)
         else
         {
             //PC's move
-            cout << "calling PC's ShootActionStatic" << endl;
-            result = ShootActionStatic("Your", playerCells, enemyCells, debug, true);
+            //cout << "calling PC's ShootActionStatic" << endl;
+            result = ShootActionStatic("Your", enemyCells, playerCells, debug, true);
             if(result)
                 playerAliveShipCells--;
-            cout << "playerAliveShipCells: " << enemyAliveShipCells << endl;
-            cout << "Press \"Enter\" to continue";
-            cin.ignore();
+            //cout << "playerAliveShipCells: " << enemyAliveShipCells << endl;
+            cout << "Press \"Enter\" key to continue" << endl;
             cin.ignore();
             system("clear");
 
             while(result)
             {
-                result = ShootActionStatic("Your", playerCells, enemyCells, debug, true);
-                cout << "playerAliveShipCells: " << playerAliveShipCells << endl;
-                cout << "Press \"Enter\" to continue";
-                cin.ignore();
+                result = ShootActionStatic("Your", enemyCells, playerCells, debug, true);
+                //cout << "playerAliveShipCells: " << playerAliveShipCells << endl;
+                cout << "Press \"Enter\" to continue" << endl;
                 cin.ignore();
                 system("clear");
                 if(!result)
@@ -182,26 +189,27 @@ void SeaBattleGame::Singleplayer(bool debug)
 
 
             //Player's move
-            result = ShootActionStatic("You", playerCells, enemyCells, debug, false);
+            result = ShootActionStatic("You", enemyCells,playerCells,  debug, false);
             if(result)
                 enemyAliveShipCells--;
-            cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
-            cout << "Press \"Enter\" to continue";
+            //cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
+            cout << "Press \"Enter\" to continue" << endl;
             cin.ignore();
             cin.ignore();
             system("clear");
 
             while (result)
             {
-                result = ShootActionStatic("You", playerCells, enemyCells, debug, false);
+                result = ShootActionStatic("You", enemyCells, playerCells,  debug, false);
+                cout << "Press \"Enter\" to continue" << endl;
                 cin.ignore();
                 cin.ignore();
                 system("clear");
                 if(!result)
                     break;
                 enemyAliveShipCells--;
-                cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
-                cout << "Press \"Enter\" to continue";
+                //cout << "enemyAliveShipCells: " << enemyAliveShipCells << endl;
+                cout << "Press \"Enter\" to continue" << endl;
                 if(enemyAliveShipCells == 0)
                     break;
             }
@@ -211,13 +219,12 @@ void SeaBattleGame::Singleplayer(bool debug)
     PrintLogo();
     cout << "Game Over!" << endl;
     if(enemyAliveShipCells == 0)
-        cout << firstPlayer<< " won!" << endl;
+        cout << firstPlayer << " won!" << endl;
     else
         cout << secondPlayer << " won!" << endl;
 
         //ShootAction(enemyCells,)
-    cout << "Press \"Enter\" key to return to Main Menu";
-    cin.ignore();
+    cout << "Press \"Enter\" key to return to Main Menu" << endl;
     cin.ignore();
 
     MainMenu();
@@ -236,8 +243,8 @@ void SeaBattleGame::Hotseat(bool debug)
     cin >> secondPlayer;
     cout << "Awesome, " << secondPlayer << endl;
 
-    Cell** playerCells = Preset(1);
-    Cell** enemyCells = Preset(1);
+    Cell** playerCells = Preset::GenerateField(1,false);
+    Cell** enemyCells = Preset::GenerateField(1,true);
 
 
     RenderGrid(firstPlayer + "'s", secondPlayer + "'s", playerCells, enemyCells, debug, true);
@@ -246,139 +253,6 @@ void SeaBattleGame::Hotseat(bool debug)
         cin.ignore();
     cin.ignore();
 
-}
-
-
-Cell ** SeaBattleGame::Preset(int number)
-{
-    Cell** result = 0;
-    result = new Cell*[10];
-    for(int i = 0; i < 10; i++)
-    {
-        result[i] = new Cell[10];
-    }
-
-    //First row
-    result[0][0] = Cell(true,true,true);
-    result[0][1] = Cell();
-    result[0][2] = Cell(true,true,true);
-    result[0][3] = Cell();
-    result[0][4] = Cell();
-    result[0][5] = Cell();
-    result[0][6] = Cell();
-    result[0][7] = Cell();
-    result[0][8] = Cell();
-    result[0][9] = Cell();
-
-    //Second row
-    result[1][0] = Cell();
-    result[1][1] = Cell();
-    result[1][2] = Cell(true,true,true);
-    result[1][3] = Cell();
-    result[1][4] = Cell();
-    result[1][5] = Cell();
-    result[1][6] = Cell();
-    result[1][7] = Cell();
-    result[1][8] = Cell();
-    result[1][9] = Cell();
-
-    //Third row
-    result[2][0] = Cell();
-    result[2][1] = Cell();
-    result[2][2] = Cell(true,true,true);
-    result[2][3] = Cell();
-    result[2][4] = Cell();
-    result[2][5] = Cell();
-    result[2][6] = Cell();
-    result[2][7] = Cell(true,true,true);
-    result[2][8] = Cell();
-    result[2][9] = Cell();
-
-    //Fourth row
-    result[3][0] = Cell();
-    result[3][1] = Cell();
-    result[3][2] = Cell();
-    result[3][3] = Cell();
-    result[3][4] = Cell();
-    result[3][5] = Cell(true,true,true);
-    result[3][6] = Cell();
-    result[3][7] = Cell(true,true,true);
-    result[3][8] = Cell();
-    result[3][9] = Cell(true,true,true);
-
-    //Fifth row
-    result[4][0] = Cell();
-    result[4][1] = Cell(true,true,true);
-    result[4][2] = Cell();
-    result[4][3] = Cell();
-    result[4][4] = Cell();
-    result[4][5] = Cell(true,true,true);
-    result[4][6] = Cell();
-    result[4][7] = Cell();
-    result[4][8] = Cell();
-    result[4][9] = Cell();
-
-    //Sixth row
-    result[5][0] = Cell();
-    result[5][1] = Cell(true,true,true);
-    result[5][2] = Cell();
-    result[5][3] = Cell();
-    result[5][4] = Cell();
-    result[5][5] = Cell(true,true,true);
-    result[5][6] = Cell();
-    result[5][7] = Cell();
-    result[5][8] = Cell();
-    result[5][9] = Cell();
-
-    //Seventh row
-    result[6][0] = Cell();
-    result[6][1] = Cell(true,true,true);
-    result[6][2] = Cell();
-    result[6][3] = Cell();
-    result[6][4] = Cell();
-    result[6][5] = Cell();
-    result[6][6] = Cell();
-    result[6][7] = Cell();
-    result[6][8] = Cell(true,true,true);
-    result[6][9] = Cell();
-
-    //Eight row
-    result[7][0] = Cell();
-    result[7][1] = Cell(true,true,true);
-    result[7][2] = Cell();
-    result[7][3] = Cell();
-    result[7][4] = Cell();
-    result[7][5] = Cell();
-    result[7][6] = Cell();
-    result[7][7] = Cell();
-    result[7][8] = Cell(true,true,true);
-    result[7][9] = Cell();
-
-    //Ninth row
-    result[8][0] = Cell();
-    result[8][1] = Cell();
-    result[8][2] = Cell();
-    result[8][3] = Cell();
-    result[8][4] = Cell();
-    result[8][5] = Cell();
-    result[8][6] = Cell();
-    result[8][7] = Cell();
-    result[8][8] = Cell(true,true,true);
-    result[8][9] = Cell();
-
-    //Ninth row
-    result[9][0] = Cell();
-    result[9][1] = Cell();
-    result[9][2] = Cell();
-    result[9][3] = Cell();
-    result[9][4] = Cell(true,true,true);
-    result[9][5] = Cell(true,true,true);
-    result[9][6] = Cell(true,true,true);
-    result[9][7] = Cell();
-    result[9][8] = Cell();
-    result[9][9] = Cell();
-
-    return result;
 }
 
 void SeaBattleGame::RenderGrid(string firstPlayer, string secondPlayer, Cell **playerCells, Cell **enemyCells, bool debug, bool hotseat)
@@ -468,13 +342,11 @@ void SeaBattleGame::RenderGrid(string firstPlayer, string secondPlayer, Cell **p
         cout << endl;
         rowNumber++;
         }
-
+    cout << endl;
 }
 
 bool SeaBattleGame::ShootActionStatic(string firstPlayer, Cell **enemyCells, Cell **playerCells, bool debug, bool isPC)
 {
-    srand ( time(nullptr) );
-    int xCoordinate = 0;
     int yCoordinate = 0;
 
     if(isPC)
@@ -484,12 +356,12 @@ bool SeaBattleGame::ShootActionStatic(string firstPlayer, Cell **enemyCells, Cel
         {
             yCoordinate = rand() * 1.0 / RAND_MAX * (9+1);
             int xCoordinateInt = rand() * 1.0 / RAND_MAX * (9+1);
-            cout << "PC's xCoordinateInt:" << xCoordinateInt << endl;
-            cout << "PC's yCoordinate:" << yCoordinate << endl;
+            //cout << "PC's xCoordinateInt:" << xCoordinateInt << endl;
+            //cout << "PC's yCoordinate:" << yCoordinate << endl;
             if (!playerCells[xCoordinateInt][yCoordinate].cellState)
             {
-                cout << "PC hit " << char(xCoordinateInt + 65) << " " << yCoordinate << endl;
-                cout << "and hit cell with already false cellState" << endl;
+                //cout << "PC shot " << char(xCoordinateInt + 65) << " " << yCoordinate << endl;
+                //cout << "and hit cell with already false cellState" << endl;
                 isCellAlive = true;
             }
             else
@@ -498,7 +370,7 @@ bool SeaBattleGame::ShootActionStatic(string firstPlayer, Cell **enemyCells, Cel
                 playerCells[xCoordinateInt][yCoordinate].cellState = false;
                 PrintLogo();
                 RenderGrid("Your", "PC", playerCells, enemyCells, debug);
-                cout << "PC hit " << char(xCoordinateInt + 65) << " " << yCoordinate;
+                cout << "PC hit " << char(xCoordinateInt + 65) << " " << yCoordinate + 1;
                 if(playerCells[xCoordinateInt][yCoordinate].ship)
                 {
                     cout << " and damaged your ship." << endl;
@@ -525,19 +397,22 @@ bool SeaBattleGame::ShootActionStatic(string firstPlayer, Cell **enemyCells, Cel
         //Too bad I can't use recursive call here whatsoever
         cout << R"(Please, enter the X and Y coordinate, according to the format ("E 4", "A 2"))" << endl;
         scanf("%s %d", &xCoordinateChar, &yCoordinate);
-        cout << "xCoordinateChar: " << xCoordinateChar << endl;
-        cout << "xCoordinateChar after conversion: " << int(xCoordinateChar - 65) << endl;
-        cout << "yCoordinate: " << yCoordinate << endl;
+        //cout << "xCoordinateChar: " << xCoordinateChar << endl;
+        //cout << "xCoordinateChar after conversion: " << int(xCoordinateChar - 65) << endl;
+        //cout << "yCoordinate: " << yCoordinate << endl;
         x = int(xCoordinateChar - 65);
 
         while (x > 9 or x < 0 or yCoordinate > 10 or yCoordinate < 1)
         {
+            system("clear");
             cout << "Please, enter the valid coordinates" << endl;
+            PrintLogo();
+            RenderGrid("Your", "PC", playerCells, enemyCells, debug);
             cout << R"(Please, enter the X and Y coordinate, according to the format ("E 4", "A 2"))" << endl;
             scanf("%s %d", &xCoordinateChar, &yCoordinate);
-            cout << "xCoordinateChar: " << xCoordinateChar << endl;
-            cout << "xCoordinateChar after conversion: " << int(xCoordinateChar - 65) << endl;
-            cout << "yCoordinate: " << yCoordinate << endl;
+            //cout << "xCoordinateChar: " << xCoordinateChar << endl;
+            //cout << "xCoordinateChar after conversion: " << int(xCoordinateChar - 65) << endl;
+            //cout << "yCoordinate: " << yCoordinate << endl;
             x = int(xCoordinateChar - 65);
         }
 
@@ -545,6 +420,7 @@ bool SeaBattleGame::ShootActionStatic(string firstPlayer, Cell **enemyCells, Cel
         yCoordinate--;
         if(!enemyCells[x][yCoordinate].cellState)
         {
+            system("clear");
             cout << "This cell is already damaged. Please, enter the coordinates of another cell" << endl;
             ShootActionStatic("You", enemyCells, playerCells, debug, false);
         }
@@ -566,6 +442,9 @@ bool SeaBattleGame::ShootActionStatic(string firstPlayer, Cell **enemyCells, Cel
             return false;
         }
     }
+
+    //Returning false just to shut up warning on cmake build
+    return false;
 }
 
 
@@ -581,7 +460,7 @@ bool SeaBattleGame::FlipTheCoin(string firstPlayer, string secondPlayer)
     cout << "Press \"Enter\" to continue";
     cin.ignore();
     cin.ignore();
-    return false;
+    return result;
 }
 
 

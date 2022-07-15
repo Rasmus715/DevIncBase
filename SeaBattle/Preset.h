@@ -10,8 +10,8 @@
 
 class Preset {
 
-    static Cell ** GetPreset(int number);
-
+public:
+    static Cell ** GenerateField(int number, bool exclude);
 };
 
 
