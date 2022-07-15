@@ -22,10 +22,10 @@ int getCoordinates(string knightNumber, string axis)
     {
         cout << "Please, enter the " << axis << " coordinates for the " << knightNumber << " knight: ";
         cin >> knightCoordinate;
-        if(knightCoordinate > 8 or knightCoordinate < 1)
+        if (knightCoordinate > 8 or knightCoordinate < 1)
             outOfRangeCoordinateError();
     }
-    while(knightCoordinate > 8 or knightCoordinate < 1);
+    while (knightCoordinate > 8 or knightCoordinate < 1);
 
     return knightCoordinate;
 }
@@ -45,48 +45,55 @@ int main()
     {
        knightTwoX = getCoordinates("second", "X");
        knightTwoY = getCoordinates("second", "Y");
-       if(knightOneX == knightTwoX and knightOneY == knightTwoY)
+       if (knightOneX == knightTwoX and knightOneY == knightTwoY)
            collisionCoordinateError(knightOneX, knightOneY);
     }
     while (knightOneX == knightTwoX and knightOneY == knightTwoY);
 
-    if (knightOneX - 2 == knightTwoX and knightOneY + 1 == knightTwoY) {
+    if (knightOneX - 2 == knightTwoX and knightOneY + 1 == knightTwoY)
+    {
         answer = true;
     }
 
-    if (knightOneX  + 2 == knightTwoX and knightOneY - 1 == knightTwoY) {
+    if (knightOneX  + 2 == knightTwoX and knightOneY - 1 == knightTwoY)
+    {
         answer = true;
     }
 
-    if (knightOneX + 1 == knightTwoX and knightOneY - 2 == knightTwoY) {
+    if (knightOneX + 1 == knightTwoX and knightOneY - 2 == knightTwoY)
+    {
         answer = true;
     }
 
-    if (knightOneX - 1 == knightTwoX and knightOneY - 2 == knightTwoY) {
+    if (knightOneX - 1 == knightTwoX and knightOneY - 2 == knightTwoY)
+    {
         answer = true;
     }
 
-    if (knightOneX -2 == knightTwoX and knightOneY - 1 == knightTwoY) {
+    if (knightOneX -2 == knightTwoX and knightOneY - 1 == knightTwoY)
+    {
         answer = true;
     }
 
-    if (knightOneX + 1 == knightTwoX and knightOneY + 2 == knightTwoY) {
+    if (knightOneX + 1 == knightTwoX and knightOneY + 2 == knightTwoY)
+    {
         answer = true;
     }
 
-    if (knightOneX + 2 == knightTwoX and knightOneY - 1 == knightTwoY) {
+    if (knightOneX + 2 == knightTwoX and knightOneY - 1 == knightTwoY)
+    {
         answer = true;
     }
 
-    if (knightOneX - 1 == knightTwoX and knightOneY + 2 == knightTwoY) {
+    if (knightOneX - 1 == knightTwoX and knightOneY + 2 == knightTwoY)
+    {
         answer = true;
     }
 
     if (answer)
         cout << "Knights can beat one another!";
-     else
-         cout << "Knights can not beat one another!";
-
+    else
+        cout << "Knights can not beat one another!";
 
     return  0;
 }

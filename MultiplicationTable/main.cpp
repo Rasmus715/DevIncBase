@@ -9,13 +9,13 @@ void putSpaces(int i, int j, int multiplier)
     int amountOfDigitsInNumber = 0;
     int number = j * i;
 
-    while(maxNumber > 0)
+    while (maxNumber > 0)
     {
         maxNumber /= 10;
         amountOfDigitsInMaxNumber++;
     }
 
-    while(number > 0)
+    while (number > 0)
     {
         number /= 10;
         amountOfDigitsInNumber++;

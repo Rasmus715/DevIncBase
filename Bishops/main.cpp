@@ -25,7 +25,7 @@ int getCoordinates(string bishopNumber, string axis)
         if(bishopCoordinate > 8 or bishopCoordinate < 1)
             outOfRangeCoordinateError();
     }
-    while(bishopCoordinate > 8 or bishopCoordinate < 1);
+    while (bishopCoordinate > 8 or bishopCoordinate < 1);
 
     return bishopCoordinate;
 }
@@ -45,24 +45,28 @@ int main()
     {
        bishopTwoX = getCoordinates("second", "X");
        bishopTwoY = getCoordinates("second", "Y");
-       if(bishopOneX == bishopTwoX and bishopOneY == bishopTwoY)
+       if (bishopOneX == bishopTwoX and bishopOneY == bishopTwoY)
            collisionCoordinateError(bishopOneX, bishopOneY);
     }
     while (bishopOneX == bishopTwoX and bishopOneY == bishopTwoY);
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++)
+    {
         if (bishopOneX + i == bishopTwoY and bishopOneY + i == bishopTwoX)
         {
             answer = true;
         }
+
         if (bishopOneX == bishopTwoY - i and bishopOneY == bishopTwoX - i)
         {
             answer = true;
         }
+
         if (bishopOneX - i == bishopTwoY and bishopOneY + i == bishopTwoX)
         {
             answer = true;
         }
+
         if (bishopOneX + i == bishopTwoY and bishopOneY - i == bishopTwoX)
         {
             answer = true;
@@ -71,9 +75,8 @@ int main()
 
     if (answer)
         cout << "Bishops can beat one another!";
-     else
-         cout << "Bishops can't beat one another!";
-
+    else
+        cout << "Bishops can't beat one another!";
 
     return  0;
 }

@@ -25,10 +25,10 @@ int main()
     if ((descending and ascending) or (!descending and !ascending))
         cout << "Digits in number are neither descending nor ascending";
     else
-    if (descending)
-        cout << "Digits in number are descending";
-    else
-        cout << "Digits in number are ascending";
+        if (descending)
+            cout << "Digits in number are descending";
+        else
+            cout << "Digits in number are ascending";
 
     return 0;
 }
