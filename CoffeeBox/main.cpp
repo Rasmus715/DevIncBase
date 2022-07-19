@@ -35,6 +35,7 @@ int main()
 void PrintCoffeeBoxLogo()
 {
     cout << "COFFEEBOX" << endl;
+    cout << "------------------" << endl;
 }
 
 void mainMenu() {
@@ -47,6 +48,7 @@ void mainMenu() {
     cout << "3. " << get<1>(LATTE) << ": " << get<0>(LATTE) << " " << CURRENCY << endl;
     cout << "4. Service menu" << endl;
     cout << "5. Exit" << endl;
+    cout << "------------------";
 
     cin >> option;
 
@@ -154,6 +156,8 @@ void cookCoffee(tuple<double,string> coffee)
     currentlyDeposited = 0.0;
     currentSugarAmount = 0.0;
     cups--;
+    system("clear");
+    PrintCoffeeBoxLogo();
     return mainMenu();
 }
 
@@ -168,6 +172,7 @@ void cookCoffeeCurrencyMenu(tuple<double,string> coffee)
     cout << "5. 0.2 " <<  CURRENCY << endl;
     cout << "6. 0.1 " <<  CURRENCY << endl;
     cout << "7. Exit to Main Menu" << endl;
+    cout << "------------------" << endl;
 }
 
 void cookCoffeeOutOfRangeException()
