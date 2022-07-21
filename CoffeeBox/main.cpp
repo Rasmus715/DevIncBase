@@ -104,7 +104,7 @@ void mainMenu()
 
 void cookCoffee(string coffee, double price)
 {
-    if(cups == 0)
+    if (cups == 0)
     {
         clearScreen();
         PrintCoffeeBoxLogo();
@@ -116,7 +116,7 @@ void cookCoffee(string coffee, double price)
         return mainMenu();
     }
 
-    if(currentlyDeposited < price)
+    if (currentlyDeposited < price)
         return notEnoughMoneyException();
 
     clearScreen();
@@ -211,7 +211,7 @@ void cookCoffeeProgressBar()
         cout << flush;
         progress += 0.15;
 
-        if(isDone)
+        if (isDone)
             return;
 
         if (progress > 1.0)
@@ -333,7 +333,7 @@ void withdraw()
 
  void printBalance()
  {
-     cout << "Balance: " << currentlyDeposited << endl;
+     cout << "Balance: " << currentlyDeposited << CURRENCY << endl;
      cout << "------------------" << endl;
  }
 
