@@ -1,14 +1,47 @@
 #include <iostream>
-#include "iomanip"
 
 using namespace std;
 
+void putSpaces(int i, int j, int multiplier)
+{
+    int maxNumber = multiplier * i;
+    int amountOfDigitsInMaxNumber = 0;
+    int amountOfDigitsInNumber = 0;
+    int number = j * i;
+
+    while (maxNumber > 0)
+    {
+        maxNumber /= 10;
+        amountOfDigitsInMaxNumber++;
+    }
+
+    while (number > 0)
+    {
+        number /= 10;
+        amountOfDigitsInNumber++;
+    }
+
+    while (amountOfDigitsInNumber < amountOfDigitsInMaxNumber)
+    {
+        cout << " ";
+        amountOfDigitsInNumber++;
+    }
+}
+
 int main()
 {
-    for (int multiplier = 1; multiplier <= 10; multiplier++)
+    const int multiplier = 10;
+    for (int j  = 1; j <= multiplier; j++)
     {
-        for (int i = 1; i <= 10; i++)
-            cout << setw(4) << multiplier * i;
+        for (int i = 1; i <= multiplier; i++)
+        {
+            if (i != 1)
+                cout << " ";
+
+            putSpaces(i, j, multiplier);
+            cout << i * j;
+        }
         cout << endl;
     }
 }
+
