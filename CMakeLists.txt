@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
-project(untitled)
+project(DevIncBase)
 
 set(CMAKE_CXX_STANDARD 14)
+
+add_executable(CoffeeBox CoffeeBox/main.cpp)
 
 add_executable(Mutants Mutants/main.cpp)
 add_executable(MultiplicationTable MultiplicationTable/main.cpp)
@@ -14,6 +16,5 @@ add_executable(LadderOne_TaskSeven Ladder/One/TaskSeven/main.cpp)
 add_executable(NumberOfFate NumberOfFate/main.cpp)
 add_executable(Bishops Bishops/main.cpp)
 add_executable(Knights Knights/main.cpp)
-add_executable(CoffeeBox CoffeeBox/main.cpp)
 add_executable(Ladder_Currency Ladder/Currency/main.cpp)
 add_executable(SeaBattle SeaBattle/main.cpp SeaBattle/SeaBattleGame.cpp SeaBattle/SeaBattleGame.h SeaBattle/Cell.cpp SeaBattle/Cell.h SeaBattle/Preset.cpp SeaBattle/Preset.h)

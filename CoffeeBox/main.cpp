@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <curses.h>
 
 using namespace std;
 
@@ -9,9 +10,8 @@ void PrintCoffeeBoxLogo();
 void mainMenu();
 void printMainMenu();
 void printCurrencyMenu();
-void mainMenuOutOfRangeException();
 void cookCoffee(string coffee, double price);
-void cookCoffeeOutOfRangeException();
+void optionOutOfRangeException();
 void Sleep(int milliseconds);
 void cookCoffeeProgressBar();
 void currencyMenu();
@@ -75,32 +75,29 @@ void mainMenu()
         case 1:
             clearScreen();
             printBalance();
-            cookCoffee(ESPRESSO, ESPRESSO_PRICE);
-            break;
+            return cookCoffee(ESPRESSO, ESPRESSO_PRICE);
         case 2:
             clearScreen();
             printBalance();
-            cookCoffee(CAPPUCCINO, CAPPUCCINO_PRICE);
-            break;
+            return cookCoffee(CAPPUCCINO, CAPPUCCINO_PRICE);
         case 3:
             clearScreen();
             printBalance();
-            cookCoffee(LATTE, LATTE_PRICE);
-            break;
+            return cookCoffee(LATTE, LATTE_PRICE);
         case 4:
             clearScreen();
             printCurrencyMenu();
-            currencyMenu();
+            return currencyMenu();
         case 5:
             clearScreen();
-            serviceMenu();
+            return serviceMenu();
         case 6:
             return;
         default:
             clearScreen();
             printBalance();
             printMainMenu();
-            mainMenuOutOfRangeException();
+            optionOutOfRangeException();
             return mainMenu();
     }
 }
@@ -186,7 +183,7 @@ void currencyMenu()
         default:
             clearScreen();
             printCurrencyMenu();
-            cookCoffeeOutOfRangeException();
+            optionOutOfRangeException();
             return currencyMenu();
     }
 }
@@ -314,6 +311,7 @@ void addCups()
             cout << "Cups successfully added." << endl;
             cout << "Returning into service menu..." << endl;
             pressAnyNumber();
+            clearScreen();
             break;
         }
     }
@@ -324,6 +322,7 @@ void withdraw()
     setAccumulatedCash(0.0);
     printWithdrawMenu();
     pressAnyNumber();
+    clearScreen();
 }
 //Print functions section
  void PrintCoffeeBoxLogo()
@@ -435,17 +434,10 @@ void setCupsAmount(int value)
 
  void clearScreen()
 {
-    for(int i = 0; i < 40; i++)
-    {
-        cout << endl;
-    }
+    cout << "\033[2J\033[1;1H";
 }
 
 //Errors and Exceptions section
- void cookCoffeeOutOfRangeException()
- {
-     cout << "There is no such option. Please, enter valid option" << endl;
- }
 
  void notEnoughMoneyException()
  {
@@ -454,7 +446,7 @@ void setCupsAmount(int value)
      return mainMenu();
  }
 
- void mainMenuOutOfRangeException()
+ void optionOutOfRangeException()
  {
      cout << "Incorrect input. Please, enter one of the options listed below." << endl;
  }
