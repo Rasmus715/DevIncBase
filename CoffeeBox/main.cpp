@@ -17,11 +17,14 @@ void cookCoffeeProgressBar();
 void currencyMenu();
 void notEnoughMoneyException();
 void printBalance();
+void outOfCupsException();
+void execute();
+void clearScreen();
 
-//Max methods
+ //Max methods
 void serviceMenu();
 void printServiceMenuLoginPage();
-void printServiceMenuLoginError();
+void serviceMenuLoginError();
 void printServiceMenu();
 void printWithdrawMenu();
 void startServiceMenu();
@@ -36,49 +39,29 @@ int getCupsAmount();
 
 const string CURRENCY = "BYN";
 const string LATTE = "Latte";
-const double LATTE_PRICE = 2.0;
-const string ESPRESSO = "Espresso";
-const double ESPRESSO_PRICE = 3.0;
 const string CAPPUCCINO = "Cappuccino";
+const string ESPRESSO = "Espresso";
+const double LATTE_PRICE = 2.0;
+const double ESPRESSO_PRICE = 3.0;
 const double CAPPUCCINO_PRICE = 2.5;
 const int MAX_CUPS = 700;
 const int INITIAL_CUPS = 7;
+const int PIN = 1234;
 double currentlyDeposited = 0.0;
-int currentSugarAmount = 0;
 int cups = INITIAL_CUPS;
 double accumulatedCash = 0.0;
-int const PIN = 1234;
+
 
 int main()
 {
-    printBalance();
-    printMainMenu();
-    mainMenu();
+    execute();
     return  0;
 }
 
-void PrintCoffeeBoxLogo()
-{
-    cout << "COFFEEBOX" << endl;
-    cout << "------------------" << endl;
-}
-
-void printBalance()
-{
-    cout << "Balance: " << currentlyDeposited << endl;
-    cout << "------------------" << endl;
-}
-
-void printMainMenu()
-{
-    cout << "Please, choose an option:" << endl;
-    cout << "1. " << ESPRESSO << ": " << ESPRESSO_PRICE << " " << CURRENCY << endl;
-    cout << "2. " << CAPPUCCINO << ": " << CAPPUCCINO_PRICE << " " << CURRENCY << endl;
-    cout << "3. " << LATTE << ": " << LATTE_PRICE << " " << CURRENCY << endl;
-    cout << "4. Insert coins" << endl;
-    cout << "5. Service menu" << endl;
-    cout << "6. Exit" << endl;
-    cout << "------------------" << endl;
+void execute() {
+    printBalance();
+    printMainMenu();
+    mainMenu();
 }
 
 void mainMenu()
@@ -90,31 +73,31 @@ void mainMenu()
     switch (option)
     {
         case 1:
-            system("clear");
+            clearScreen();
             printBalance();
             cookCoffee(ESPRESSO, ESPRESSO_PRICE);
             break;
         case 2:
-            system("clear");
+            clearScreen();
             printBalance();
             cookCoffee(CAPPUCCINO, CAPPUCCINO_PRICE);
             break;
         case 3:
-            system("clear");
+            clearScreen();
             printBalance();
             cookCoffee(LATTE, LATTE_PRICE);
             break;
         case 4:
-            system("clear");
+            clearScreen();
             printCurrencyMenu();
             currencyMenu();
         case 5:
-            system("clear");
+            clearScreen();
             serviceMenu();
         case 6:
             return;
         default:
-            system("clear");
+            clearScreen();
             printBalance();
             printMainMenu();
             mainMenuOutOfRangeException();
@@ -122,35 +105,16 @@ void mainMenu()
     }
 }
 
-void notEnoughMoneyException()
-{
-    printMainMenu();
-    cout << "Not enough money. Please, deposit more money, if you will to buy this coffee." << endl;
-    return mainMenu();
-}
-
-void mainMenuOutOfRangeException()
-{
-    cout << "Incorrect input. Please, enter one of the options listed below." << endl;
-}
-
-void outOfCupsException()
-{
-    cout << "Apparently, we are out of cups." << endl << flush << "Please call customer service" << endl;
-}
-
-
 void cookCoffee(string coffee, double price)
 {
-
     if(cups == 0)
     {
-        system("clear");
+        clearScreen();
         PrintCoffeeBoxLogo();
         outOfCupsException();
         cout << "cups: " << cups;
         Sleep(10000);
-        system("clear");
+        clearScreen();
         printMainMenu();
         return mainMenu();
     }
@@ -158,10 +122,9 @@ void cookCoffee(string coffee, double price)
     if(currentlyDeposited < price)
         return notEnoughMoneyException();
 
-    system("clear");
+    clearScreen();
 
-
-    system("clear");
+    clearScreen();
     PrintCoffeeBoxLogo();
     cout << "Your coffee is being prepared, please wait a bit..." << endl;
     cookCoffeeProgressBar();
@@ -169,26 +132,15 @@ void cookCoffee(string coffee, double price)
     cout << "Now, take your " << coffee << "." << endl;
     cout << "Have a nice day!" << endl;
     Sleep(5000);
-    system("Clear");
+    clearScreen();
     cups--;
     currentlyDeposited -= price;
-    system("clear");
+    clearScreen();
     printBalance();
     printMainMenu();
     return mainMenu();
 }
 
-void printCurrencyMenu()
-{
-    printBalance();
-    cout << "1. 2 " << CURRENCY << endl;
-    cout << "2. 1 " << CURRENCY << endl;
-    cout << "3. 0.5 " << CURRENCY << endl;
-    cout << "4. 0.2 " << CURRENCY << endl;
-    cout << "5. 0.1 " << CURRENCY << endl;
-    cout << "6. Exit to Main Menu" << endl;
-    cout << "------------------" << endl;
-}
 void currencyMenu()
 {
     int option = 0;
@@ -199,51 +151,45 @@ void currencyMenu()
         case 1:
             currentlyDeposited += 2;
             accumulatedCash += 2;
-            system("clear");
+            clearScreen();
             printCurrencyMenu();
             return currencyMenu();
         case 2:
             currentlyDeposited += 1;
             accumulatedCash += 1;
-            system("clear");
+            clearScreen();
             printCurrencyMenu();
             return currencyMenu();
         case 3:
             currentlyDeposited += 0.5;
             accumulatedCash += 0.5;
-            system("clear");
+            clearScreen();
             printCurrencyMenu();
             return currencyMenu();
         case 4:
             currentlyDeposited += 0.2;
             accumulatedCash += 0.2;
-            system("clear");
+            clearScreen();
             printCurrencyMenu();
             return currencyMenu();
         case 5:
             currentlyDeposited += 0.1;
             accumulatedCash += 0.1;
-            system("clear");
+            clearScreen();
             printCurrencyMenu();
             return currencyMenu();
         case 6:
-            system("clear");
+            clearScreen();
             printBalance();
             printMainMenu();
             return mainMenu();
         default:
-            system("clear");
+            clearScreen();
             printCurrencyMenu();
             cookCoffeeOutOfRangeException();
             return currencyMenu();
     }
 }
-
-void cookCoffeeOutOfRangeException()
-{
-    cout << "There is no such option. Please, enter valid option" << endl;
-}
-
 
 void cookCoffeeProgressBar()
 {
@@ -281,10 +227,6 @@ void cookCoffeeProgressBar()
     cout << endl;
 }
 
-void Sleep(int milliseconds)
-{
-    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
-}
 
 void serviceMenu()
 {
@@ -298,17 +240,17 @@ void serviceMenu()
         cin >> pinEntered;
 
         if (pinEntered == PIN) {
-            system("clear");
+            clearScreen();
             startServiceMenu();
             break;
         } else if (pinEntered == escapeSymbol) {
-            system("clear");
+            clearScreen();
             printMainMenu();
             return mainMenu();
         } else {
             cout << "\n";
-            system("clear");
-            printServiceMenuLoginError();
+            clearScreen();
+            serviceMenuLoginError();
         }
     }
 }
@@ -320,28 +262,25 @@ void startServiceMenu()
     int const addCupsButton = 2;
     int const mainMenuButton = 3;
 
-    printServiceMenu();
-
     while (true)
     {
+        printServiceMenu();
         cout << "\n";
         cin >> choice;
 
         if (choice == withdrawButton) {
-            cout << "\n";
-            system("clear");
+            clearScreen();
             withdraw();
         } else if (choice == addCupsButton) {
-            cout << "\n";
-            system("clear");
+            clearScreen();
             addCups();
         } else if (choice == mainMenuButton) {
-            system("clear");
+            clearScreen();
             printMainMenu();
             return mainMenu();
         } else {
             cout << "\n";
-            system("clear");
+            clearScreen();
             printServiceMenu();
             printServiceMenuError();
         }
@@ -386,28 +325,37 @@ void withdraw()
     printWithdrawMenu();
     pressAnyNumber();
 }
+//Print functions section
+ void PrintCoffeeBoxLogo()
+ {
+     cout << "COFFEEBOX" << endl;
+     cout << "------------------" << endl;
+ }
 
-void setCupsAmount(int value)
-{
-    cups = value;
-}
+ void printBalance()
+ {
+     cout << "Balance: " << currentlyDeposited << endl;
+     cout << "------------------" << endl;
+ }
+
+ void printMainMenu()
+ {
+     cout << "Please, choose an option:" << endl;
+     cout << "1. " << ESPRESSO << ": " << ESPRESSO_PRICE << " " << CURRENCY << endl;
+     cout << "2. " << CAPPUCCINO << ": " << CAPPUCCINO_PRICE << " " << CURRENCY << endl;
+     cout << "3. " << LATTE << ": " << LATTE_PRICE << " " << CURRENCY << endl;
+     cout << "4. Insert coins" << endl;
+     cout << "5. Service menu" << endl;
+     cout << "6. Exit" << endl;
+     cout << "------------------" << endl;
+ }
 
 void printServiceMenuLoginPage()
 {
     cout << "Service Menu" << endl;
     cout << "------------------" << endl;
     cout << "Please, enter PIN and press \"Enter\":" << endl;
-    cout << "Enter 1 to return to customer menu" << endl;
-}
-
-void printServiceMenuLoginError()
-{
-    cout << "Service Menu" << endl;
-    cout << "------------------" << endl;
-    cout << "Error! Incorrect PIN." << endl;
-    cout << "Please, enter PIN and press \"Enter\":" << endl;
-    cout << "Enter 1 to return to customer menu" << endl;
-    cout << "------------------" << endl;
+    cout << "Enter \"1\" to return to customer menu" << endl;
 }
 
 void printServiceMenu()
@@ -424,6 +372,24 @@ void printServiceMenu()
     cout << "------------------" << endl;
 }
 
+ void printCurrencyMenu()
+ {
+     printBalance();
+     cout << "1. 2 " << CURRENCY << endl;
+     cout << "2. 1 " << CURRENCY << endl;
+     cout << "3. 0.5 " << CURRENCY << endl;
+     cout << "4. 0.2 " << CURRENCY << endl;
+     cout << "5. 0.1 " << CURRENCY << endl;
+     cout << "6. Exit to Main Menu" << endl;
+     cout << "------------------" << endl;
+ }
+
+ void printServiceMenuError()
+ {
+     cout << "Error! Use numbers from range 1 - 3" << endl;
+ }
+
+
 void printWithdrawMenu()
 {
     cout << "Service Menu" << endl;
@@ -433,17 +399,13 @@ void printWithdrawMenu()
     cout << "Returning to Service Menu..." << endl;
 }
 
-void printServiceMenuError()
-{
-    cout << "Error! Use numbers from range 1 - 3" << endl;
-}
-
+//Minor service functions section
 void pressAnyNumber()
 {
-    char timeHolder = '/0';
+    char holder = '\0';
     cout << "Enter any number to continue..." << endl;
     cout << "-------------------" << endl;
-    cin >> timeHolder;
+    cin >> holder;
 }
 
 double getAccumulatedCash()
@@ -451,14 +413,64 @@ double getAccumulatedCash()
     return accumulatedCash;
 }
 
-void setAccumulatedCash(double number)
-{
-    accumulatedCash = number;
-}
-
 int getCupsAmount()
 {
     return cups;
 }
 
+ void setAccumulatedCash(double number)
+{
+    accumulatedCash = number;
+}
+
+void setCupsAmount(int value)
+{
+     cups = value;
+}
+
+ void Sleep(int milliseconds)
+ {
+     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+ }
+
+ void clearScreen()
+{
+    for(int i = 0; i < 40; i++)
+    {
+        cout << endl;
+    }
+}
+
+//Errors and Exceptions section
+ void cookCoffeeOutOfRangeException()
+ {
+     cout << "There is no such option. Please, enter valid option" << endl;
+ }
+
+ void notEnoughMoneyException()
+ {
+     printMainMenu();
+     cout << "Not enough money. Please, deposit more money, if you will to buy this coffee." << endl;
+     return mainMenu();
+ }
+
+ void mainMenuOutOfRangeException()
+ {
+     cout << "Incorrect input. Please, enter one of the options listed below." << endl;
+ }
+
+ void outOfCupsException()
+ {
+     cout << "Apparently, we are out of cups." << endl << flush << "Please call customer service" << endl;
+ }
+
+ void serviceMenuLoginError()
+ {
+     cout << "Service Menu" << endl;
+     cout << "------------------" << endl;
+     cout << "Please, enter PIN and press \"Enter\":" << endl;
+     cout << "Enter 1 to return to customer menu" << endl;
+     cout << "------------------" << endl;
+     cout << "Error! Incorrect PIN." << endl;
+ }
 
