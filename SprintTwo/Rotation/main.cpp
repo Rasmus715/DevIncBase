@@ -2,15 +2,46 @@
 
 using namespace std;
 
+const int ZERO = 0;
+const int ONE = 1;
+
+int enterAndValidateNumber();
+bool isNumberRotating(long number);
+
 int main()
 {
     long number = 0;
-    int lastDigit = 0;
-    const int ZERO = 0;
-    const int ONE = 1;
 
-    cout << "Please, enter a number: ";
-    cin >> number;
+    number = enterAndValidateNumber();
+    if(isNumberRotating(number))
+        cout << "The number " << number << " is rotating";
+    else
+        cout << "The number " << number << " is not rotating";
+
+    return 0;
+}
+
+int enterAndValidateNumber()
+{
+    int result = -1;
+
+    do
+    {
+        cout << "Enter the number of sequence: ";
+        cin >> result;
+        if(result < 0)
+        {
+            cout << "Incorrect input. The number of sequence cannot be less than zero" << endl;
+            cout << "Enter the number of sequence: ";
+        }
+    }
+    while(result < 0);
+    return result;
+}
+
+bool isNumberRotating(long number)
+{
+    long lastDigit = 0;
 
     while(number > 9)
     {
@@ -18,25 +49,21 @@ int main()
 
         if(lastDigit != ONE && lastDigit != ZERO)
         {
-            cout << "Number is not rotating.";
-            return 0;
+            return false;
         }
 
         if(lastDigit == ZERO && number / 10 % 10 != ONE)
         {
-            cout << "Number is not rotating.";
-            return 0;
+            return false;
         }
 
         if(lastDigit == ONE && number / 10 % 10 != ZERO)
         {
-         cout << "Number is not rotating.";
-         return 0;
+            return false;
         }
 
         number /= 10;
     }
 
-    cout << "Number is rotating" << endl;
-    return 0;
+    return true;
 }

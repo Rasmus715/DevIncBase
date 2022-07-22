@@ -19,8 +19,9 @@ void printBalance();
 void outOfCupsException();
 void execute();
 void clearScreen();
+void softlockCoffeebox();
 
- //Max methods
+//Max methods
 void serviceMenu();
 void printServiceMenuLoginPage();
 void serviceMenuLoginError();
@@ -49,6 +50,9 @@ const int PIN = 1234;
 double currentlyDeposited = 0.0;
 int cups = INITIAL_CUPS;
 double accumulatedCash = 0.0;
+int wrongPinEntries = 0;
+int progressBarWidth = 60;
+const int wrongPinEntriesToSoftlock = 3;
 
 
 int main()
@@ -73,25 +77,23 @@ void mainMenu()
     {
         case 1:
             clearScreen();
-            printBalance();
-            return cookCoffee(ESPRESSO, ESPRESSO_PRICE);
+            printCurrencyMenu();
+            return currencyMenu();
         case 2:
             clearScreen();
             printBalance();
-            return cookCoffee(CAPPUCCINO, CAPPUCCINO_PRICE);
+            return cookCoffee(ESPRESSO, ESPRESSO_PRICE);
         case 3:
             clearScreen();
             printBalance();
-            return cookCoffee(LATTE, LATTE_PRICE);
+            return cookCoffee(CAPPUCCINO, CAPPUCCINO_PRICE);
         case 4:
             clearScreen();
-            printCurrencyMenu();
-            return currencyMenu();
+            printBalance();
+            return cookCoffee(LATTE, LATTE_PRICE);
         case 5:
             clearScreen();
             return serviceMenu();
-        case 6:
-            return;
         default:
             clearScreen();
             printBalance();
@@ -103,22 +105,8 @@ void mainMenu()
 
 void cookCoffee(string coffee, double price)
 {
-    if (cups == 0)
-    {
-        clearScreen();
-        PrintCoffeeBoxLogo();
-        outOfCupsException();
-        cout << "cups: " << cups;
-        Sleep(10000);
-        clearScreen();
-        printMainMenu();
-        return mainMenu();
-    }
-
     if (currentlyDeposited < price)
         return notEnoughMoneyException();
-
-    clearScreen();
 
     clearScreen();
     PrintCoffeeBoxLogo();
@@ -139,6 +127,15 @@ void cookCoffee(string coffee, double price)
 
 void currencyMenu()
 {
+    if (cups == 0)
+    {
+        clearScreen();
+        printBalance();
+        printMainMenu();
+        outOfCupsException();
+        mainMenu();
+    }
+
     int option = 0;
     cin >> option;
 
@@ -193,11 +190,9 @@ void cookCoffeeProgressBar()
     int isDone = false;
     while (progress <= 1.0)
     {
-        int barWidth = 60;
-
         cout << "[";
-        int pos = barWidth * progress;
-        for (int i = 0; i < barWidth; ++i)
+        int pos = progressBarWidth * progress;
+        for (int i = 0; i < progressBarWidth; ++i)
         {
             if (i < pos)
                 cout << "=";
@@ -236,17 +231,25 @@ void serviceMenu()
         cin >> pinEntered;
 
         if (pinEntered == PIN) {
+            wrongPinEntries = 0;
             clearScreen();
             startServiceMenu();
             break;
         } else if (pinEntered == escapeSymbol) {
             clearScreen();
+            printBalance();
             printMainMenu();
             return mainMenu();
         } else {
             cout << "\n";
             clearScreen();
+            wrongPinEntries++;
             serviceMenuLoginError();
+            if(wrongPinEntries == wrongPinEntriesToSoftlock)
+            {
+                softlockCoffeebox();
+            }
+
         }
     }
 }
@@ -272,6 +275,7 @@ void startServiceMenu()
             addCups();
         } else if (choice == mainMenuButton) {
             clearScreen();
+            printBalance();
             printMainMenu();
             return mainMenu();
         } else {
@@ -332,19 +336,18 @@ void withdraw()
 
  void printBalance()
  {
-     cout << "Balance: " << currentlyDeposited << CURRENCY << endl;
+     cout << "Balance: " << currentlyDeposited << " " << CURRENCY << endl;
      cout << "------------------" << endl;
  }
 
  void printMainMenu()
  {
      cout << "Please, choose an option:" << endl;
-     cout << "1. " << ESPRESSO << ": " << ESPRESSO_PRICE << " " << CURRENCY << endl;
-     cout << "2. " << CAPPUCCINO << ": " << CAPPUCCINO_PRICE << " " << CURRENCY << endl;
-     cout << "3. " << LATTE << ": " << LATTE_PRICE << " " << CURRENCY << endl;
-     cout << "4. Insert coins" << endl;
+     cout << "1. Insert coins" << endl;
+     cout << "2. " << ESPRESSO << ": " << ESPRESSO_PRICE << " " << CURRENCY << endl;
+     cout << "3. " << CAPPUCCINO << ": " << CAPPUCCINO_PRICE << " " << CURRENCY << endl;
+     cout << "4. " << LATTE << ": " << LATTE_PRICE << " " << CURRENCY << endl;
      cout << "5. Service menu" << endl;
-     cout << "6. Exit" << endl;
      cout << "------------------" << endl;
  }
 
@@ -353,6 +356,13 @@ void printServiceMenuLoginPage()
     cout << "Service Menu" << endl;
     cout << "------------------" << endl;
     cout << "Please, enter PIN and press \"Enter\":" << endl;
+
+    if(wrongPinEntries > 0)
+    {
+        cout << "WARNING! You entered wrong pin " << wrongPinEntries << " times. " << endl;
+        cout << "If you enter it wrong " << wrongPinEntriesToSoftlock - wrongPinEntries << " more times, the Coffeebox will be locked." << endl;
+    }
+
     cout << "Enter \"1\" to return to customer menu" << endl;
 }
 
@@ -463,5 +473,21 @@ void setCupsAmount(int value)
      cout << "Enter 1 to return to customer menu" << endl;
      cout << "------------------" << endl;
      cout << "Error! Incorrect PIN." << endl;
+
+     if (wrongPinEntries > 0)
+     {
+         cout << "WARNING! You entered wrong pin " << wrongPinEntries << " times. " << endl;
+         cout << "If you enter it wrong " << wrongPinEntriesToSoftlock - wrongPinEntries << " more times, the Coffeebox will be locked." << endl;
+     }
  }
 
+ void softlockCoffeebox()
+ {
+    while(true)
+    {
+        clearScreen();
+        cout << "Sorry, you entered wrong PIN " << wrongPinEntriesToSoftlock << " times." << endl;
+        cout << "Please call customer service, to continue using Coffeebox." << endl;
+        cin.ignore();
+    }
+ }
