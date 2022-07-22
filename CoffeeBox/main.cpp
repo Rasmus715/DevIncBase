@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <iomanip>
 
 using namespace std;
 
@@ -344,9 +345,9 @@ void withdraw()
  {
      cout << "Please, choose an option:" << endl;
      cout << "1. Insert coins" << endl;
-     cout << "2. " << ESPRESSO << ": " << ESPRESSO_PRICE << " " << CURRENCY << endl;
-     cout << "3. " << CAPPUCCINO << ": " << CAPPUCCINO_PRICE << " " << CURRENCY << endl;
-     cout << "4. " << LATTE << ": " << LATTE_PRICE << " " << CURRENCY << endl;
+     cout << "2. " << ESPRESSO << ": " << setw(5) << ESPRESSO_PRICE << " " << CURRENCY << endl;
+     cout << "3. " << CAPPUCCINO << ": " << setw(5) << CAPPUCCINO_PRICE << " " << CURRENCY << endl;
+     cout << "4. " << LATTE << ": " << setw(8) << LATTE_PRICE << " " << CURRENCY << endl;
      cout << "5. Service menu" << endl;
      cout << "------------------" << endl;
  }
