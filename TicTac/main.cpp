@@ -3,7 +3,6 @@
 using namespace std;
 
 void renderGrid(int[]);
-void ticTacGame();
 int decidePlayerFigure();
 void clearScreen();
 void printScore();
@@ -234,8 +233,8 @@ void makeAMove(bool isPC, bool pcGoesFirstFlag, bool openings[])
         } while ((option > 9 || option < 1) || grid[option - 1] != 0);
 
         grid[option - 1] = playerFigure;
-
-    } else
+    }
+    else
     {
         //PCs algorithm
 
@@ -299,6 +298,7 @@ void makeAMove(bool isPC, bool pcGoesFirstFlag, bool openings[])
             grid[6] = pcFigure;
 
         //Defensive
+
         //Horizontal
         //1st row
         else
@@ -370,6 +370,7 @@ void makeAMove(bool isPC, bool pcGoesFirstFlag, bool openings[])
         //Offensive
         //First move states here.
         //The PC will try to get center(4) cell, then the corner cells
+        //if PC goes first, the openings array fills with "true" value according to cell
         else if(pcGoesFirstFlag)
         {
             if (!openings[4])
@@ -393,7 +394,7 @@ void makeAMove(bool isPC, bool pcGoesFirstFlag, bool openings[])
                 openings[2] = true;
             }
 
-            else if(grid[3] == 0 && !openings[3])
+            else if(!openings[3])
             {
                 grid[3] = pcFigure;
                 openings[3] = true;
