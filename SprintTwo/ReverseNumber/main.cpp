@@ -23,13 +23,14 @@ int enterAndValidateNumber()
     {
         cout << "Enter the number: ";
         cin >> result;
-        if(result < 0)
+
+        if (result < 0)
         {
             cout << "Incorrect input. The number cannot be less than zero" << endl;
             cout << "Enter the number of sequence: ";
         }
     }
-    while(result < 0);
+    while (result < 0);
     return result;
 }
 
@@ -38,12 +39,11 @@ int reverseNumber(int number)
     int reversedNumber = 0;
     int lastDigit = 0;
 
-    while(number != 0)
+    while (number != 0)
     {
         lastDigit = number % 10;
         reversedNumber = reversedNumber * 10 + lastDigit;
         number /= 10;
     }
-
     return reversedNumber;
 }

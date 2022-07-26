@@ -21,7 +21,7 @@ int main()
     convertToBinary(number);
     printBinaryNumber(binaryNumber, number);
 
-    if(isNumberRotating())
+    if (isNumberRotating())
         cout << "The number " << number << " is rotating";
     else
         cout << "The number " << number << " is not rotating";
@@ -37,33 +37,30 @@ int enterAndValidateNumber()
     {
         cout << "Enter the number: ";
         cin >> result;
-        if(result < 0)
+        if (result < 0)
         {
             cout << "Incorrect input. The number cannot be less than zero" << endl;
         }
     }
-    while(result < 0);
+    while (result < 0);
     return result;
 }
 
 bool isNumberRotating()
 {
-
     for (int j = binaryNumberSize - 1; j >= 1; j--)
     {
-        if(binaryNumber[j] == ZERO && binaryNumber[j-1] != ONE)
+        if (binaryNumber[j] == ZERO && binaryNumber[j-1] != ONE)
         {
             return false;
         }
 
-        if(binaryNumber[j] == ONE && binaryNumber[j-1] != ZERO)
+        if (binaryNumber[j] == ONE && binaryNumber[j-1] != ZERO)
         {
             return false;
         }
     }
-
     return true;
-
 }
 
 void printBinaryNumber(int binaryNumber[], int number)
