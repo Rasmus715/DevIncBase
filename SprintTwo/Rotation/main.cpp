@@ -65,7 +65,7 @@ bool isNumberRotating()
 
 void printBinaryNumber(int binaryNumber[], int number)
 {
-    cout <<"The number " << number << " in binary is: ";
+    cout << "The number " << number << " in binary is: ";
     for (int j = binaryNumberSize - 1; j >= 0; j--)
         cout << binaryNumber[j];
     cout << endl;
