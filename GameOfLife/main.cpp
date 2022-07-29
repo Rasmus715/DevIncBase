@@ -2,7 +2,6 @@
 #include <chrono>
 #include <thread>
 
-
 using namespace std;
 
 bool randomBool(int min, int max);
@@ -12,16 +11,16 @@ void nextGeneration();
 void clearScreen();
 void renderField();
 
-int const FIELD_SIZE = 50;
-int const DENSITY = 12;
+int const FIELD_SIZE = 12;
+int const DENSITY = 1;
+int const TIMEOUT = 150;
 bool field[FIELD_SIZE][FIELD_SIZE];
 
 int main()
 {
-    int generation = 1;
     srand(time(nullptr));
+    int generation = 1;
 
-    renderField();
     for(int i = 0; i < FIELD_SIZE; i++)
         for(int j = 0; j < FIELD_SIZE; j++)
             field[i][j] = randomBool(0,DENSITY);
@@ -32,7 +31,7 @@ int main()
         renderField();
         nextGeneration();
         generation++;
-        sleep(100);
+        sleep(TIMEOUT);
         clearScreen();
     }
 }

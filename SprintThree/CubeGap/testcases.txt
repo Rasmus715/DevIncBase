@@ -1,0 +1,139 @@
+    //The 2nd X row is transparent
+    //Front side.
+    //First row
+    cube[0][0][0] = SOLID;
+    cube[0][0][1] = TRANSPARENT;
+    cube[0][0][2] = SOLID;
+
+    //Second row
+    cube[0][1][0] = SOLID;
+    cube[0][1][1] = SOLID;
+    cube[0][1][2] = SOLID;
+
+    //Third row
+    cube[0][2][0] = SOLID;
+    cube[0][2][1] = SOLID;
+    cube[0][2][2] = SOLID;
+
+    //Center side.
+    //First row
+    cube[1][0][0] = SOLID;
+    cube[1][0][1] = TRANSPARENT;
+    cube[1][0][2] = SOLID;
+
+    //Second row
+    cube[1][1][0] = SOLID;
+    cube[1][1][1] = SOLID;
+    cube[1][1][2] = SOLID;
+
+    //Third row
+    cube[1][2][0] = SOLID;
+    cube[1][2][1] = SOLID;
+    cube[1][2][2] = SOLID;
+
+    //Back side.
+    //First row
+    cube[2][0][0] = SOLID;
+    cube[2][0][1] = TRANSPARENT;
+    cube[2][0][2] = SOLID;
+
+    //Second row
+    cube[2][1][0] = SOLID;
+    cube[2][1][1] = SOLID;
+    cube[2][1][2] = SOLID;
+
+    //Third row
+    cube[2][2][0] = SOLID;
+    cube[2][2][1] = SOLID;
+    cube[2][2][2] = SOLID;
+
+
+/////////////////////////////////////////////////
+//Front side. The 3rd column is transparent
+    cube[0][0][0] = SOLID;
+    cube[0][0][1] = SOLID;
+    cube[0][0][2] = TRANSPARENT;
+
+    cube[0][1][0] = SOLID;
+    cube[0][1][1] = SOLID;
+    cube[0][1][2] = TRANSPARENT;
+
+    cube[0][2][0] = SOLID;
+    cube[0][2][1] = SOLID;
+    cube[0][2][2] = TRANSPARENT;
+
+    //Center side.
+    cube[1][0][0] = SOLID;
+    cube[1][0][1] = SOLID;
+    cube[1][0][2] = SOLID;
+
+    cube[1][1][0] = SOLID;
+    cube[1][1][1] = SOLID;
+    cube[1][1][2] = SOLID;
+
+    cube[1][2][0] = SOLID;
+    cube[1][2][1] = SOLID;
+    cube[1][2][2] = SOLID;
+
+    //Back side.
+    cube[2][0][0] = SOLID;
+    cube[2][0][1] = SOLID;
+    cube[2][0][2] = SOLID;
+
+    cube[2][1][0] = SOLID;
+    cube[2][1][1] = SOLID;
+    cube[2][1][2] = SOLID;
+
+    cube[2][2][0] = SOLID;
+    cube[2][2][1] = SOLID;
+    cube[2][2][2] = SOLID;
+
+/////////////////////////////////////////////////
+    //The 1st Z row is transparent
+    //Front side.
+    //First row
+    cube[0][0][0] = TRANSPARENT;
+    cube[0][0][1] = TRANSPARENT;
+    cube[0][0][2] = TRANSPARENT;
+
+    //Second row
+    cube[0][1][0] = SOLID;
+    cube[0][1][1] = SOLID;
+    cube[0][1][2] = SOLID;
+
+    //Third row
+    cube[0][2][0] = SOLID;
+    cube[0][2][1] = SOLID;
+    cube[0][2][2] = SOLID;
+
+    //Center side.
+    //First row
+    cube[1][0][0] = SOLID;
+    cube[1][0][1] = SOLID;
+    cube[1][0][2] = SOLID;
+
+    //Second row
+    cube[1][1][0] = SOLID;
+    cube[1][1][1] = SOLID;
+    cube[1][1][2] = SOLID;
+
+    //Third row
+    cube[1][2][0] = SOLID;
+    cube[1][2][1] = SOLID;
+    cube[1][2][2] = SOLID;
+
+    //Back side.
+    //First row
+    cube[2][0][0] = SOLID;
+    cube[2][0][1] = SOLID;
+    cube[2][0][2] = SOLID;
+
+    //Second row
+    cube[2][1][0] = SOLID;
+    cube[2][1][1] = SOLID;
+    cube[2][1][2] = SOLID;
+
+    //Third row
+    cube[2][2][0] = SOLID;
+    cube[2][2][1] = SOLID;
+    cube[2][2][2] = SOLID;
