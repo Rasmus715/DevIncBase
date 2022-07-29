@@ -20,7 +20,6 @@ int main()
     while(rotateLine());
 
     cout << "STOP!";
-
     return  0;
 }
 
@@ -38,7 +37,6 @@ bool rotateLine()
             i += 2;
         }
     }
-
 
     if(rotations == 0)
         return false;

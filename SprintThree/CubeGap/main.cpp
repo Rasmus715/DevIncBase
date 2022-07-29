@@ -3,91 +3,46 @@
 using namespace std;
 
 const bool TRANSPARENT = false;
-const bool SOLID = true;
-const int DIMENSIONS = 3;
+const int SIDE_SIZE = 3;
 
-bool checkForGaps(bool cube[3][3][3]);
+bool checkForGaps(bool cube[SIDE_SIZE][SIDE_SIZE][SIDE_SIZE]);
 
 int main()
 {
-    bool cube[3][3][3];
+    bool cube[SIDE_SIZE][SIDE_SIZE][SIDE_SIZE];
+    srand(time(nullptr));
 
-    //The 1st Z row is transparent
-    //Front side.
-    //First row
-    cube[0][0][0] = TRANSPARENT;
-    cube[0][0][1] = TRANSPARENT;
-    cube[0][0][2] = TRANSPARENT;
-
-    //Second row
-    cube[0][1][0] = SOLID;
-    cube[0][1][1] = SOLID;
-    cube[0][1][2] = SOLID;
-
-    //Third row
-    cube[0][2][0] = SOLID;
-    cube[0][2][1] = SOLID;
-    cube[0][2][2] = SOLID;
-
-    //Center side.
-    //First row
-    cube[1][0][0] = SOLID;
-    cube[1][0][1] = SOLID;
-    cube[1][0][2] = SOLID;
-
-    //Second row
-    cube[1][1][0] = SOLID;
-    cube[1][1][1] = SOLID;
-    cube[1][1][2] = SOLID;
-
-    //Third row
-    cube[1][2][0] = SOLID;
-    cube[1][2][1] = SOLID;
-    cube[1][2][2] = SOLID;
-
-    //Back side.
-    //First row
-    cube[2][0][0] = SOLID;
-    cube[2][0][1] = SOLID;
-    cube[2][0][2] = SOLID;
-
-    //Second row
-    cube[2][1][0] = SOLID;
-    cube[2][1][1] = SOLID;
-    cube[2][1][2] = SOLID;
-
-    //Third row
-    cube[2][2][0] = SOLID;
-    cube[2][2][1] = SOLID;
-    cube[2][2][2] = SOLID;
+    for (int y = 0; y < SIDE_SIZE; y ++)
+        for (int z = 0; z < SIDE_SIZE; z++)
+            for (int x = 0; x < SIDE_SIZE; x++)
+                cube[y][z][x] = rand() % 2 == TRANSPARENT;
 
     if(checkForGaps(cube))
         cout << "Cube has a gap";
     else
         cout << "Cube does not has a gap";
-
     return 0;
 }
 
 bool checkForGaps(bool cube[3][3][3])
 {
     //Checking columns (Y rows)
-    for(int i = 0; i < DIMENSIONS; i++)
-        for(int j = 0; j < DIMENSIONS; j++)
+    for(int i = 0; i < SIDE_SIZE; i++)
+        for(int j = 0; j < SIDE_SIZE; j++)
             if(!cube[i][0][j] && !cube[i][1][j] && !cube[i][2][j])
                 return true;
                 //cout << "Cube has a transparent column" << endl;
 
     //Checking X rows
-    for(int i = 0; i < DIMENSIONS; i++)
-        for(int j = 0; j < DIMENSIONS; j++)
+    for(int i = 0; i < SIDE_SIZE; i++)
+        for(int j = 0; j < SIDE_SIZE; j++)
             if(!cube[0][i][j] && !cube[1][i][j] && !cube[2][i][j])
                 return true;
                 //cout << "Cube has a transparent X row" << endl;
 
     //Checking Z rows
-    for(int i = 0; i < DIMENSIONS; i++)
-        for(int j = 0; j < DIMENSIONS; j++)
+    for(int i = 0; i < SIDE_SIZE; i++)
+        for(int j = 0; j < SIDE_SIZE; j++)
             if(!cube[i][j][0] && !cube[i][j][1] && !cube[i][j][2])
                 return true;
                 //cout << "Cube has a transparent Z row" << endl;

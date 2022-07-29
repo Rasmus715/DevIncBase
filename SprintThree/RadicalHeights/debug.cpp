@@ -29,27 +29,25 @@ void printHeights()
 
 void printSightlessHeights()
 {
-    double heightVisibilityRate = 0.0;
-    heightVisibilityRate = heights[1] - heights[0];
+    double heightVisibilityRate = heights[1] - heights[0];
     double heightWithRate = 0.0;
-    double maxHeight = heights[0];
     int currentStep = STEP * 2;
 
-    if(arrayHasSightlessHeights())
+
+    if (arrayHasSightlessHeights())
     {
         cout << "User don't see heights: " << endl;
         for (int i = 2; i < SIZE; i++)
         {
             heightWithRate = currentStep * heightVisibilityRate + heights[0];
-
-            if (heights[i] < heightWithRate || heights[i] < maxHeight)
+            if (heights[i] <= heightWithRate)
             {
 
                 cout << heights[i] << "(" << i << ") ";
             }
 
-            if(heights[i] > maxHeight)
-                maxHeight = heights[i];
+            if (heights[i] > heightVisibilityRate)
+                heightVisibilityRate = heights[i] - heights[0];
 
             currentStep += STEP;
         }
@@ -62,17 +60,17 @@ bool arrayHasSightlessHeights()
 {
     double heightVisibilityRate = 0.0;
     heightVisibilityRate = heights[1] - heights[0];
-    double maxHeight = heights[0];
     double heightWithRate = 0.0;
     int currentStep = STEP * 2;
 
     for (int i = 2; i < SIZE; i++)
     {
-        heightWithRate = currentStep * heightVisibilityRate + heights[0];
-        if (heights[i] < heightWithRate || heights[i] < maxHeight)
+        heightWithRate =  currentStep * heightVisibilityRate + heights[0];
+
+        if (heights[i] <= heightWithRate)
         {
-            if (heights[i] > maxHeight)
-                maxHeight = heights[i];
+            if(heights[i] > heightVisibilityRate)
+                heightVisibilityRate = heights[i] - heights[0];
             return true;
         }
         currentStep += STEP;
