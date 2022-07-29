@@ -12,8 +12,8 @@ int main()
     bool cube[SIDE_SIZE][SIDE_SIZE][SIDE_SIZE];
     srand(time(nullptr));
 
-    for (int y = 0; y < SIDE_SIZE; y ++)
-        for (int z = 0; z < SIDE_SIZE; z++)
+    for (int z = 0; z < SIDE_SIZE; z ++)
+        for (int y = 0; y < SIDE_SIZE; y++)
             for (int x = 0; x < SIDE_SIZE; x++)
                 cube[y][z][x] = rand() % 2 == TRANSPARENT;
 
@@ -24,7 +24,7 @@ int main()
     return 0;
 }
 
-bool checkForGaps(bool cube[3][3][3])
+bool checkForGaps(bool cube[SIDE_SIZE][SIDE_SIZE][SIDE_SIZE])
 {
     //Checking columns (Y rows)
     for(int i = 0; i < SIDE_SIZE; i++)

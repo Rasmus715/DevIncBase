@@ -11,8 +11,8 @@ void nextGeneration();
 void clearScreen();
 void renderField();
 
-int const FIELD_SIZE = 12;
-int const DENSITY = 1;
+int const FIELD_SIZE = 50;
+int const DENSITY = 13;
 int const TIMEOUT = 150;
 bool field[FIELD_SIZE][FIELD_SIZE];
 
