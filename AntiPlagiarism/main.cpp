@@ -15,53 +15,18 @@ int strLen(string text);
 int getThreeWords(string text, char[], int startIndex);
 bool strCmp(char src[], char dst[]);
 
-
 int main()
 {
-    string input = "-----One thing$%$%$^*@#  $#$#%@@--- I don't      know why  @@@@@@   \n"
+    string input = "    One@@@@@ thing @@@@@I don't know why@@@@@@@@@@@    \n   "
                    "It doesn't even matter how hard you try\n"
                    "Keep that in mind, I designed this rhyme\n"
                    "To explain in due time";
 
-    cout << input << endl;
 
-    cout << endl << "Normalizing..." << endl;
-    input = normalize(input);
-    cout << input << endl;
 
     string fragment = "I designed this rhyme";
 
-    char words[1024];
-    char inputWords[1024];
-    int fragmentPos = 0;
-    int inputPos = 0;
-    int totalComparisons = 0;
-    int correctComparisons = 0;
-
-    input = normalize(input);
-
-    cout << endl << "Searching for:" << endl;
-    while(fragment[fragmentPos] != 0)
-    {
-        fragmentPos = getThreeWords(fragment, words, fragmentPos);
-        cout << words << endl;
-        while(input[inputPos] != 0)
-        {
-            inputPos = getThreeWords(input, inputWords,inputPos);
-            //cout << "Input words: " << inputWords << endl << "words: " << words << endl;
-
-            if(strCmp(inputWords,words))
-            {
-                correctComparisons++;
-                totalComparisons++;
-            }
-            else
-                totalComparisons++;
-            memset(inputWords, 0, sizeof inputWords);
-        }
-        memset(words, 0, sizeof words);
-        inputPos = 0;
-    }
+    cout << antiPlagiarism(input,fragment);
 
     //cout << "Total comparisons: " << totalComparisons << endl;
     //cout << "Correct comparisons: " << correctComparisons << endl;
@@ -80,18 +45,45 @@ bool isSeparator(char symbol)
 
 double antiPlagiarism(string text, string fragment)
 {
-    char words[strLen(fragment)];
-    int fragmentPos = 0;
-    fragment = normalize(fragment);
+    cout << text << endl;
 
+    cout << endl << "Normalizing..." << endl;
+    text = normalize(text);
+    cout << text << endl;
+
+    char words[1024];
+    char inputWords[1024];
+    int fragmentPos = 0;
+    int inputPos = 0;
+    double totalComparisons = 0;
+    double correctComparisons = 0;
+
+    text = normalize(text);
+
+    cout << endl << "Searching for:" << endl;
     while(fragment[fragmentPos] != 0)
     {
         fragmentPos = getThreeWords(fragment, words, fragmentPos);
         cout << words << endl;
+        while(text[inputPos] != 0)
+        {
+            inputPos = getThreeWords(text, inputWords,inputPos);
+            //cout << "Input words: " << inputWords << endl << "words: " << words << endl;
+
+            if(strCmp(inputWords,words))
+            {
+                correctComparisons++;
+                totalComparisons++;
+            }
+            else
+                totalComparisons++;
+            memset(inputWords, 0, sizeof inputWords);
+        }
         memset(words, 0, sizeof words);
+        inputPos = 0;
     }
 
-    return 100;
+    return correctComparisons/totalComparisons;
 }
 
 string normalize(string text)
@@ -102,29 +94,16 @@ string normalize(string text)
    {
        bool putSpace = false;
 
-       while (isSeparator(text[textPos]))
-       {
-           if (text[textPos + 1] == '\0')
-               return result;
-
-           else if(result != "")
-           {
-               if(isSign(text[textPos + 1]))
-               {
-                   result += ' ';
-                   textPos++;
-                   continue;
-               }
-
-           }
-
-           textPos++;
-       }
-
 
        while (text[textPos] == ' ')
        {
            if(!isSign(text[textPos + 1]))
+           {
+               textPos++;
+               continue;
+           }
+
+           if(result == "")
            {
                textPos++;
                continue;
@@ -142,9 +121,17 @@ string normalize(string text)
            textPos++;
        }
 
-       if (!isSeparator(text[textPos]))
-           result += text[textPos];
+       if (isSeparator(text[textPos])) {
+           if (isSign(text[textPos + 1])) {
+               //cout << "separator: " << (int) text[textPos] << endl;
+               result += ' ';
+               continue;
+           }
+       }
 
+
+       if (isSign(text[textPos]))
+           result += text[textPos];
    }
 
    return result;
