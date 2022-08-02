@@ -11,8 +11,8 @@ void nextGeneration();
 void clearScreen();
 void renderField();
 
-int const FIELD_SIZE = 50;
-int const DENSITY = 13;
+int const FIELD_SIZE = 100;
+int const DENSITY = 8;
 int const TIMEOUT = 150;
 bool field[FIELD_SIZE][FIELD_SIZE];
 
@@ -21,8 +21,8 @@ int main()
     srand(time(nullptr));
     int generation = 1;
 
-    for(int i = 0; i < FIELD_SIZE; i++)
-        for(int j = 0; j < FIELD_SIZE; j++)
+    for (int i = 0; i < FIELD_SIZE; i++)
+        for (int j = 0; j < FIELD_SIZE; j++)
             field[i][j] = randomBool(0,DENSITY);
 
     while(true)
@@ -48,10 +48,10 @@ void clearScreen()
 
 void renderField()
 {
-    for(int i = 0; i < FIELD_SIZE; i++)
+    for (int i = 0; i < FIELD_SIZE; i++)
     {
-        for(int j = 0; j < FIELD_SIZE; j++)
-            if(field[i][j])
+        for (int j = 0; j < FIELD_SIZE; j++)
+            if (field[i][j])
                 cout << "X" << " ";
             else
                 cout << "_" << " ";
@@ -62,9 +62,9 @@ void renderField()
 int countNeighbours(int x, int y)
 {
     int count = 0;
-    for(int i = -1; i < 2; i++)
+    for (int i = -1; i < 2; i++)
     {
-        for(int j = -1; j < 2; j++)
+        for (int j = -1; j < 2; j++)
         {
             //Preventing out of bounds exception and looking by other side of array, if we got to the edge of it.
             int col = (x + i + FIELD_SIZE) % FIELD_SIZE;
@@ -83,14 +83,14 @@ int countNeighbours(int x, int y)
 
 void nextGeneration()
 {
-    for(int i = 0; i < FIELD_SIZE; i++)
-        for(int j = 0; j < FIELD_SIZE; j++)
+    for (int i = 0; i < FIELD_SIZE; i++)
+        for (int j = 0; j < FIELD_SIZE; j++)
         {
             int neighbours = countNeighbours(i,j);
             bool hasLife = field[i][j];
-            if(!hasLife && neighbours == 3)
+            if (!hasLife && neighbours == 3)
                 field[i][j] = true;
-            else if(hasLife && (neighbours < 2 || neighbours > 3))
+            else if (hasLife && (neighbours < 2 || neighbours > 3))
             {
                 field[i][j] = false;
             }

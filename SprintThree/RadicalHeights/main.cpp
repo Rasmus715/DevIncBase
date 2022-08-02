@@ -35,7 +35,7 @@ void printSightlessHeights()
     double maxHeight = heights[0];
     int currentStep = STEP * 2;
 
-    if(arrayHasSightlessHeights())
+    if (arrayHasSightlessHeights())
     {
         cout << "User don't see heights: " << endl;
         for (int i = 2; i < SIZE; i++)
@@ -48,7 +48,7 @@ void printSightlessHeights()
                 cout << heights[i] << "(" << i << ") ";
             }
 
-            if(heights[i] > maxHeight)
+            if (heights[i] > maxHeight)
                 maxHeight = heights[i];
 
             currentStep += STEP;

@@ -9,7 +9,7 @@ void sleep(int milliseconds);
 
 const int SIZE = 10;
 const int SECOND = 1000;
-char line[SIZE] = {'<', '<', '>','<', '<', '<', '>','<', '<', '>'};
+char line[SIZE] = {'>', '<', '>','<', '>', '<', '>','<', '>', '<'};
 
 int main()
 {
@@ -17,7 +17,7 @@ int main()
 
     printLine();
 
-    while(rotateLine());
+    while (rotateLine());
 
     cout << "STOP!";
     return  0;
@@ -27,9 +27,9 @@ bool rotateLine()
 {
     int rotations = 0;
 
-    for(int i = 0; i < SIZE - 1; i++)
+    for (int i = 0; i < SIZE - 1; i++)
     {
-        if(line[i] == '>' && line[i + 1] == '<')
+        if (line[i] == '>' && line[i + 1] == '<')
         {
             line[i] = '<';
             line[i + 1] = '>';
@@ -38,7 +38,7 @@ bool rotateLine()
         }
     }
 
-    if(rotations == 0)
+    if (rotations == 0)
         return false;
     else
     {
@@ -50,7 +50,7 @@ bool rotateLine()
 
 void printLine()
 {
-    for(int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
     {
         cout << line[i] << " ";
     }
